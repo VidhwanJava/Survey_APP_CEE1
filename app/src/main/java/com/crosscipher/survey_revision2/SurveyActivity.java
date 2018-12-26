@@ -2,6 +2,7 @@ package com.crosscipher.survey_revision2;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 
+import xdroid.core.Global;
 import xdroid.toaster.Toaster;
 
 public class SurveyActivity extends AppCompatActivity {
@@ -98,10 +100,10 @@ public class SurveyActivity extends AppCompatActivity {
                         questionInput = new ArrayList<>();
                         for(DataSnapshot ds : dataSnapshot.getChildren()) {
                             String question = ds.getValue().toString();
-                            questionInput.add(count+" ) "+question);
+                            questionInput.add(count +" : "+question);
                             count++;
                         }
-                        questionCount = questionInput.size();
+                        questionCount = count-1;
 
                         questionTextView.setText(questionInput.get(0));
                         nextBtn.setEnabled(true);
@@ -114,13 +116,9 @@ public class SurveyActivity extends AppCompatActivity {
                 };
                 questionRef.addListenerForSingleValueEvent(eventListener);
 
-
             } catch (NullPointerException e) {
 
-
                 Toaster.toast("Could not Communicate with the Server.");
-
-
 
             }
 
@@ -138,25 +136,29 @@ public class SurveyActivity extends AppCompatActivity {
             catch (NullPointerException e){
                 toast("Null pointer exception");
             }
-
-
-
-
         }
     }
+
+
+
  int count=1;
-    int answerIndex;
+   // int answerIndex;
 public void nextPress(View view){
     if(editText.getText().toString().trim().length()!=0){
 
+        if(nextBtn.getText()=="Submit"){
+            rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count-1)).setValue(editText.getText().toString());
+            setContentView(R.layout.signed_in_layout);
+        }
 
         if (count<questionCount){
             questionTextView.setText(questionInput.get(count));
-            rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count)).setValue(editText.getText().toString());
+            rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count-1)).setValue(editText.getText().toString());
             count++;
             editText.setText("");
             }
-        else {nextBtn.setText("Submit");}
+        else
+        {nextBtn.setText("Submit");}
     }
     else{
         toast("Answer cannot be empty");
