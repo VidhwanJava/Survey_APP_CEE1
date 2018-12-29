@@ -159,7 +159,6 @@ public void nextPress(View view){
             }
         else
         {nextBtn.setText("Submit");}
-
     }
     else{
         toast("Answer cannot be empty");
