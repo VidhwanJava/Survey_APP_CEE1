@@ -23,16 +23,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
+import butterknife.OnClick;
 import xdroid.core.Global;
 import xdroid.toaster.Toaster;
 
 public class SurveyActivity extends AppCompatActivity {
     List<String> questionInput;
+    List<String>memberinput;
     DatabaseReference rootref;
     TextView questionTextView;
-    int questionCount;
+    int memqCount;
     getJsonFile asyncTask;
     Button nextBtn;
     EditText editText;
@@ -53,29 +56,6 @@ public class SurveyActivity extends AppCompatActivity {
         ref.child("phonenumber").setValue(phoneNumber);
 
         questionTextView=findViewById(R.id.questionTxt);
-/*
-        List<String> questions = new ArrayList<>();
-        questions.add("What is your Name?");
-        questions.add("What is your gender?");
-        questions.add("How old are you?");
-        questions.add("What is your location?");
-        questions.add("What is your parents'?");
-
-        for(String question : questions) {
-            rootref.child("questions").child(question).setValue(true);
-        }*/
-
-
-        /*rootref.child("questions").child("1").setValue("What is your Name?");
-        rootref.child("questions").child("2").setValue("What is your gender?");
-        rootref.child("questions").child("3").setValue("How old are you?");
-        rootref.child("questions").child("4").setValue("What is your location?");
-        rootref.child("questions").child("5").setValue("What is your parents'?");
-        rootref.child("questions").child("6").setValue("Are you human?");
-        rootref.child("questions").child("7").setValue("Are you alive?");*/
-
-
-
 
 
         asyncTask= new getJsonFile();
@@ -96,14 +76,15 @@ public class SurveyActivity extends AppCompatActivity {
                 ValueEventListener eventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int count=1;
+                        int count=1,cn=1;
                         questionInput = new ArrayList<>();
+
                         for(DataSnapshot ds : dataSnapshot.getChildren()) {
                             String question = ds.getValue().toString();
                             questionInput.add(count +" : "+question);
                             count++;
+                            cn++;
                         }
-                        questionCount = count-1;
 
                         questionTextView.setText(questionInput.get(0));
                         nextBtn.setEnabled(true);
@@ -115,6 +96,28 @@ public class SurveyActivity extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {}
                 };
                 questionRef.addListenerForSingleValueEvent(eventListener);
+
+
+//                DatabaseReference memberRef = rootref.child("members");
+//                ValueEventListener eventListener2 = new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        int count=1;
+//                        memberinput = new ArrayList<>();
+//
+//                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+//                            String member = ds.getValue().toString();
+//                           memberinput.add(count +" : "+member);
+//                            count++;
+//                        }
+//                        memqCount = count-1;
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {}
+//                };
+//                memberRef.addListenerForSingleValueEvent(eventListener2);
 
             } catch (NullPointerException e) {
 
@@ -142,28 +145,60 @@ public class SurveyActivity extends AppCompatActivity {
 
 
  int count=1;
-   // int answerIndex;
-public void nextPress(View view){
-    if(editText.getText().toString().trim().length()!=0){
+public void nextPress(View view) {
+    if (editText.getText().toString().trim().length() != 0) {
 
-        if(nextBtn.getText()=="Submit"){
-            rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count-1)).setValue(editText.getText().toString());
-            setContentView(R.layout.signed_in_layout);
-        }
-
-        if (count<questionCount){
+        rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count - 1)).setValue(editText.getText().toString());
+        if (count != 5 && count != 6)
             questionTextView.setText(questionInput.get(count));
-            rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count-1)).setValue(editText.getText().toString());
             count++;
             editText.setText("");
-            }
-        else
-        {nextBtn.setText("Submit");}
-    }
-    else{
-        toast("Answer cannot be empty");
-    }
 
+        if (count == 5) {
+            nextBtn.setText("Submit");
+            }
+        if (count == 6)
+        {setContentView(R.layout.signed_in_layout);
+            finish();
+         }
+    }
+         else {
+        toast("Answer cannot be empty");
+        }
 }
 
+
+//public int members() {
+//
+//
+//    int n = Integer.parseInt(editText.getText().toString().trim());
+//    return n;
+//}
+
+//
+//    public  void memq(int n){
+//    int count=1;
+//     for (int i = 0; i < n; i++) {
+//        if (editText.getText().toString().trim().length() != 0) {
+//
+////            if (nextBtn.getText() == "Submit") {
+////                rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count - 1)).setValue(editText.getText().toString());
+////                 setContentView(R.layout.signed_in_layout);
+////            }
+//
+//            if (count < memqCount) {
+//                questionTextView.setText(memberinput.get(count));
+//                rootref.child("users").child(user.getUid()).child("Answers").child(memberinput.get(count - 1)).setValue(editText.getText().toString());
+//                count++;
+//                editText.setText("");
+//            } else {
+//                nextBtn.setText("Submit");
+//            }
+//
+//        } else {
+//            toast("Answer cannot be empty");
+//        }
+//    }
+//
+//}
 }
