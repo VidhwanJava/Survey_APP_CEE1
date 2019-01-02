@@ -76,20 +76,19 @@ public class SurveyActivity extends AppCompatActivity {
                 ValueEventListener eventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int count=1,cn=1;
+                        int count=1;
                         questionInput = new ArrayList<>();
 
                         for(DataSnapshot ds : dataSnapshot.getChildren()) {
                             String question = ds.getValue().toString();
                             questionInput.add(count +" : "+question);
                             count++;
-                            cn++;
                         }
 
                         questionTextView.setText(questionInput.get(0));
                         nextBtn.setEnabled(true);
                         editText.setEnabled(true);
-
+                        count=1;
                     }
 
                     @Override
@@ -159,7 +158,8 @@ public void nextPress(View view) {
             nextBtn.setText("Submit");
             }
         if (count == 6)
-        {setContentView(R.layout.signed_in_layout);
+        {
+             count=1;
             finish();
          }
     }

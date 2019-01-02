@@ -81,7 +81,7 @@ public class SignedInActivity extends AppCompatActivity {
     public void openSurvey(View view) {
         Intent intent = new Intent(this, SurveyActivity.class);
         startActivity(intent);
-        finish();
+
     }
 
     @OnClick(R.id.sign_out)
