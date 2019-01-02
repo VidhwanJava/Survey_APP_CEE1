@@ -145,6 +145,7 @@ public class SurveyActivity extends AppCompatActivity {
 
 
  int count=1;
+@SuppressLint("SetTextI18n")
 public void nextPress(View view) {
     if (editText.getText().toString().trim().length() != 0) {
 
