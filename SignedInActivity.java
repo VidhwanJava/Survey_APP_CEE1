@@ -106,6 +106,7 @@ public class SignedInActivity extends AppCompatActivity {
 
 
 
+
     private void showSnackbar(@StringRes int errorMessageRes) {
         Snackbar.make(mRootView, errorMessageRes, Snackbar.LENGTH_LONG).show();
     }

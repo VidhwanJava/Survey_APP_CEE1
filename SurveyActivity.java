@@ -114,6 +114,7 @@ public class SurveyActivity extends AppCompatActivity {
 
                     }
 
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
                 };
