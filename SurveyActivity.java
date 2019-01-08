@@ -103,17 +103,16 @@ public class SurveyActivity extends AppCompatActivity {
                 ValueEventListener eventListener2 = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int count=1;
+                        int count = 1;
                         memberinput = new ArrayList<>();
 
-                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             String member = ds.getValue().toString();
-                           memberinput.add(count +" : "+member);
+                            memberinput.add(count + " : " + member);
                             count++;
                         }
 
                     }
-
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
