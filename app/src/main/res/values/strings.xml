@@ -118,4 +118,6 @@
     <string name="please_wait_while_we_load_questions">Please wait while we load questions....</string>
     <string name="type_your_answer_here">Type your answer here</string>
     <string name="next">Next</string>
+    <string name="adequate">Adequate</string>
+    <string name="inadequate">Inadequate</string>
 </resources>
