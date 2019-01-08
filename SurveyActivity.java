@@ -31,7 +31,7 @@ public class SurveyActivity extends AppCompatActivity {
     List<String>envinput;
     List<String>dssinput;
     DatabaseReference rootref;
-    TextView questionTextView;
+    TextView questionTextView,head;
 
     getJsonFile asyncTask;
     Button nextBtn;
@@ -48,7 +48,8 @@ public class SurveyActivity extends AppCompatActivity {
             editText= findViewById(R.id.messageEdit);
         nextBtn=findViewById(R.id.next);
         editn=findViewById(R.id.editn);
-        nwbtn=findViewById(R.id.nwbtn);
+        head = findViewById(R.id.head);
+
 
 
        user=FirebaseAuth.getInstance().getCurrentUser();
@@ -91,6 +92,7 @@ public class SurveyActivity extends AppCompatActivity {
                         questionTextView.setText(questionInput.get(0));
                         nextBtn.setEnabled(true);
                         editText.setEnabled(true);
+                        head.setText("General Information");
                     }
 
                     @Override
@@ -192,6 +194,7 @@ int a=1;int loop=0,flag=0;
 String accept="yes";
 @SuppressLint("SetTextI18n")
 public void nextPress(View view) {
+
     if (editText.getText().toString().trim().length() != 0) {
 if(condition == "qstn") {
     if (count == 7){
@@ -225,8 +228,8 @@ if(condition == "qstn") {
 
 }
 
-
 if(condition=="mmbr"){
+
 
     if(a==1) {
         editText.setText("");
@@ -235,6 +238,8 @@ if(condition=="mmbr"){
         questionTextView.setText(memberinput.get(nwcount));
         editText.setVisibility(View.VISIBLE);
         editn.setVisibility(View.INVISIBLE);
+        head.setText("Member : "+i);
+
     }
 else {
 //        TODO: This for loop should iterate "loop" times.
@@ -243,6 +248,7 @@ else {
 
 
         if (nwcount < 7) {
+
 
             rootref.child("users").child(user.getUid()).child("Answers").child("Member : " + i).child(memberinput.get(nwcount)).setValue(editText.getText().toString().trim());
             nwcount++;
@@ -253,6 +259,7 @@ else {
                 i++;
                 nwcount = 0;
                 questionTextView.setText(memberinput.get(nwcount));
+                head.setText("Member : "+i);
             }
             if (i == loop + 1) {
                finish();
