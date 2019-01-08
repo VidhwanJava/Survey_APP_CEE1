@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import static xdroid.toaster.Toaster.toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,10 +36,10 @@ public class SurveyActivity extends AppCompatActivity {
     List<String>dssinput;
     DatabaseReference rootref;
     TextView questionTextView,head;
-
+    RadioGroup rdo;
+    RadioButton val,btn1,btn2;
     getJsonFile asyncTask;
     Button nextBtn;
-    Button nwbtn;
     EditText editText;
     EditText editn;
     FirebaseUser user;
@@ -49,7 +53,9 @@ public class SurveyActivity extends AppCompatActivity {
         nextBtn=findViewById(R.id.next);
         editn=findViewById(R.id.editn);
         head = findViewById(R.id.head);
-
+        rdo=findViewById(R.id.rdo);
+        btn1=findViewById(R.id.ad);
+        btn2=findViewById(R.id.inad);
 
 
        user=FirebaseAuth.getInstance().getCurrentUser();
@@ -78,6 +84,7 @@ public class SurveyActivity extends AppCompatActivity {
 
                 DatabaseReference questionRef = rootref.child("questions");
                 ValueEventListener eventListener = new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         int count=1;
@@ -187,28 +194,25 @@ public class SurveyActivity extends AppCompatActivity {
         }
     }
 
-    int i=1;
-String condition="qstn";
- int count=1,nwcount=0;
-int a=1;int loop=0,flag=0;
-String accept="yes";
+ int count=1,nwcount=0,i=1,selectedId,a=1,loop=0,qst=0;
+String accept="yes",condition="qstn",data;
 @SuppressLint("SetTextI18n")
 public void nextPress(View view) {
 
     if (editText.getText().toString().trim().length() != 0) {
-if(condition == "qstn") {
+if(condition.equals("qstn")) {
     if (count == 7){
         condition = "mmbr";
         accept="no";
         count++;
 
     }
-        if(count!=7 && accept=="yes")
+        if(count!=7 && accept.equals("yes"))
     rootref.child("users").child(user.getUid()).child("Answers").child(questionInput.get(count - 1)).setValue(editText.getText().toString().trim());
 
-        if (count != 5 && count != 6 && count != 7 && accept=="yes")
+        if (count != 5 && count != 6 && count != 7 && accept.equals("yes"))
         questionTextView.setText(questionInput.get(count));
-       if(count!=7 && accept=="yes") {
+       if(count!=7 && accept.equals("yes")) {
            count++;
            editText.setText("");
        }
@@ -228,7 +232,7 @@ if(condition == "qstn") {
 
 }
 
-if(condition=="mmbr"){
+if(condition.equals("mmbr")){
 
 
     if(a==1) {
@@ -242,13 +246,10 @@ if(condition=="mmbr"){
 
     }
 else {
-//        TODO: This for loop should iterate "loop" times.
-//        Each time all values of each member should be accepted.
-//        for loop should be within the pushing statement. nc=0; i=1 ;mmbrip=0;
-
+//        if(count==10)
+//            condition="envsts";
 
         if (nwcount < 7) {
-
 
             rootref.child("users").child(user.getUid()).child("Answers").child("Member : " + i).child(memberinput.get(nwcount)).setValue(editText.getText().toString().trim());
             nwcount++;
@@ -262,10 +263,62 @@ else {
                 head.setText("Member : "+i);
             }
             if (i == loop + 1) {
-               finish();
+                head.setText("Environmental Sanitation");
+                editText.setVisibility(View.INVISIBLE);
+                rdo.setVisibility(View.VISIBLE);
+                questionTextView.setText(envinput.get(0));
+//               finish();
+                editText.setText("dummy");  //to override null value check
+//                count=10;
+                condition="envsts";
+                i=0;
             }
         }
         }
+    }
+
+
+   else if(condition.equals("envsts")){
+
+switch (qst) {
+    case 0:{
+        selectedId = rdo.getCheckedRadioButtonId();
+        val = (RadioButton) findViewById(selectedId);
+        data = val.getText().toString();
+        rootref.child("users").child(user.getUid()).child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        qst++;
+        questionTextView.setText(envinput.get(qst));
+        btn1.setChecked(false);
+        btn2.setChecked(false);
+        break;
+
+    }
+    case 1:{
+        selectedId = rdo.getCheckedRadioButtonId();
+        val = (RadioButton) findViewById(selectedId);
+        data = val.getText().toString();
+        rootref.child("users").child(user.getUid()).child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        qst++;
+        questionTextView.setText(envinput.get(qst));
+        btn1.setText("Somkeless");
+        btn2.setText("Smokey");
+        btn1.setChecked(false);
+        btn2.setChecked(false);
+        break;
+    }
+    case 2:{
+        selectedId = rdo.getCheckedRadioButtonId();
+        val = (RadioButton) findViewById(selectedId);
+        data = val.getText().toString();
+        rootref.child("users").child(user.getUid()).child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        qst++;
+        questionTextView.setText(envinput.get(qst));
+        // here create a new radio group and make it visible, and the older one invisibe;
+
+        break;
+    }
+
+}
     }
 }
          else {
