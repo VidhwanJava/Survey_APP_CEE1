@@ -265,7 +265,6 @@ else {
         toast("Answer cannot be empty");
         }
 
-
 }
 
 
