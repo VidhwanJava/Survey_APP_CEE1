@@ -1,4 +1,4 @@
-package com.crosscipher.survey_revision2;
+package com.threefoolz.survey_revision2;
 
 import org.junit.Test;
 

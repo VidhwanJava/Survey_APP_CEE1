@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "285003652950",
-    "firebase_url": "https://survey-c7a9f.firebaseio.com",
-    "project_id": "survey-c7a9f",
-    "storage_bucket": "survey-c7a9f.appspot.com"
+    "project_number": "560813386274",
+    "firebase_url": "https://surveyappcee1-3fa73.firebaseio.com",
+    "project_id": "surveyappcee1-3fa73",
+    "storage_bucket": "surveyappcee1-3fa73.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:285003652950:android:bf8e504ecd230d70",
+        "mobilesdk_app_id": "1:560813386274:android:bf8e504ecd230d70",
         "android_client_info": {
           "package_name": "com.crosscipher.survey_revision2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "285003652950-pnbi668ua8eto1qrl57kn51bq1lfvk08.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.crosscipher.survey_revision2",
-            "certificate_hash": "5b062aef1af307c9c6e57cb0aacaf8a3ea3b8754"
-          }
-        },
-        {
-          "client_id": "285003652950-bggtj7p02qoic4f7hqonnbq7u1u4rf0j.apps.googleusercontent.com",
+          "client_id": "560813386274-49pjcmvahi4ff5tk9grg7ecrmcksmc3c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBO8f_HRwfA6rnjyE5cvwBUGidJp1bMwYM"
+          "current_key": "AIzaSyADho4NIgd3FIaeh296i-wd4MoSkB9vxEk"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "285003652950-bggtj7p02qoic4f7hqonnbq7u1u4rf0j.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
@@ -52,28 +39,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:285003652950:android:4d3288391aa1111b",
+        "mobilesdk_app_id": "1:560813386274:android:8bdfaa361c35dd49",
         "android_client_info": {
-          "package_name": "com.java.vidhwan.survey.app"
+          "package_name": "com.crosscipher.survey_revision5"
         }
       },
       "oauth_client": [
         {
-          "client_id": "285003652950-f944chhc2h2tpbv4vf9qtilm4q7llpj4.apps.googleusercontent.com",
+          "client_id": "560813386274-f486o48td2imhcc0g2l7bvi54tuhqtfh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.java.vidhwan.survey.app",
-            "certificate_hash": "5b062aef1af307c9c6e57cb0aacaf8a3ea3b8754"
+            "package_name": "com.crosscipher.survey_revision5",
+            "certificate_hash": "ae690828780b6ffeb0e5f7c08f48d70d72fafc4a"
           }
         },
         {
-          "client_id": "285003652950-bggtj7p02qoic4f7hqonnbq7u1u4rf0j.apps.googleusercontent.com",
+          "client_id": "560813386274-49pjcmvahi4ff5tk9grg7ecrmcksmc3c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBO8f_HRwfA6rnjyE5cvwBUGidJp1bMwYM"
+          "current_key": "AIzaSyADho4NIgd3FIaeh296i-wd4MoSkB9vxEk"
         }
       ],
       "services": {
@@ -84,7 +71,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "285003652950-bggtj7p02qoic4f7hqonnbq7u1u4rf0j.apps.googleusercontent.com",
+              "client_id": "560813386274-49pjcmvahi4ff5tk9grg7ecrmcksmc3c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

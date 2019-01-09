@@ -1,4 +1,4 @@
-package com.crosscipher.survey_revision2;
+package com.threefoolz.survey_revision2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.crosscipher.survey_revision2", appContext.getPackageName());
+        assertEquals("com.threefoolz.survey_revision2", appContext.getPackageName());
     }
 }

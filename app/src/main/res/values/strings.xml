@@ -115,9 +115,20 @@
 
     <string name="menu_add_data">Add Data</string>
     <string name="hint_message">Say something…</string>
-    <string name="please_wait_while_we_load_questions">Please wait while we load questions....</string>
+    <string name="please_wait_while_we_load_questions">Please wait while we load questions from server.</string>
     <string name="type_your_answer_here">Type your answer here</string>
     <string name="next">Next</string>
     <string name="adequate">Adequate</string>
     <string name="inadequate">Inadequate</string>
+    <string name="inside">Inside</string>
+    <string name="public_well">Public Well</string>
+    <string name="domestic_well">Domestic Well</string>
+    <string name="public_tap">Public Tap</string>
+    <string name="tube_well">Tube Well</string>
+    <string name="municipal_pipeline">Municipal Pipeline</string>
+    <string name="mineral_water">Mineral Water</string>
+    <string name="others">Others</string>
+    <string name="outside">Outside</string>
+    <string name="enter_integer">Enter Integer</string>
+    <string name="both">both</string>
 </resources>
