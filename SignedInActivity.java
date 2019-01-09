@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package com.crosscipher.survey_revision2;
+package com.threefoolz.survey_revision2;
 
 import android.content.Context;
 
@@ -35,7 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseUser;
-
+import com.threefoolz.survey_revision.R;
 
 
 import butterknife.BindView;
