@@ -17,6 +17,8 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.threefoolz.survey_revision2.R;
+
 import static xdroid.toaster.Toaster.toast;
 import java.util.ArrayList;
 import java.util.List;

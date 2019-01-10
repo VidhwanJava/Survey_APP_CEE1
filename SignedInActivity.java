@@ -35,7 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.threefoolz.survey_revision.R;
+import com.threefoolz.survey_revision2.R;
 
 
 import butterknife.BindView;
