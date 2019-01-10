@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "901576064124",
+    "firebase_url": "https://survey-c43fe.firebaseio.com",
+    "project_id": "survey-c43fe",
+    "storage_bucket": "survey-c43fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901576064124:android:6461fbce84eddc65",
+        "android_client_info": {
+          "package_name": "com.threefoolz.survey_revision2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901576064124-ce9rebpes47bnjv62asihs20tsgda969.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBos6QyFlHXWZ_90mVH8q3NdFZ6I9Tf34U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
