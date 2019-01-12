@@ -283,6 +283,7 @@ if(condition.equals("mmbr")) {
                 if (questionTextView.getText().equals("5 : Marital Status")){
                    ms.setVisibility(View.VISIBLE);
                     editText.setText("Dummy");
+                    both.setText("Both");
                     editText.setVisibility(View.GONE);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInputFromWindow(editText.getWindowToken(), 0, 0);
