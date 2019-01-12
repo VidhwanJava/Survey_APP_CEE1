@@ -131,4 +131,9 @@
     <string name="outside">Outside</string>
     <string name="enter_integer">Enter Integer</string>
     <string name="both">both</string>
+    <string name="Other">Other</string>
+    <string name="Divorced">Divorced</string>
+    <string name="Widow">Widow</string>
+    <string name="Unmarried">unmarried</string>
+    <string name="Maried">Maried</string>
 </resources>

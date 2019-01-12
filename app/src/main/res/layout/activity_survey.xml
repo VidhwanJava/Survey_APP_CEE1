@@ -342,4 +342,72 @@
         app:layout_constraintTop_toBottomOf="@+id/questionTxt"
         app:layout_constraintVertical_bias="1.0" />
 
+    <RadioGroup
+        android:id="@+id/ms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/cncr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionTxt">
+
+        <RadioButton
+            android:id="@+id/maried"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:text="@string/Maried"
+            android:textSize="25sp" />
+
+        <RadioButton
+            android:id="@+id/unmaried"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="15dp"
+            android:checked="false"
+            android:text="@string/Unmarried"
+            android:textSize="25sp"
+            android:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/widow"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="0dp"
+            android:checked="false"
+            android:text="@string/Widow"
+            android:textSize="25sp"
+            android:visibility="visible" />
+
+        <RadioButton
+            android:id="@+id/divorced"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.13"
+            android:checked="false"
+            android:text="@string/Divorced"
+            android:textSize="25sp" />
+
+        <RadioButton
+            android:id="@+id/other"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:text="@string/Other"
+            android:textSize="25sp"
+            android:visibility="visible" />
+    </RadioGroup>
+
 </android.support.constraint.ConstraintLayout>
