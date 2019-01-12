@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -21,14 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.threefoolz.survey_revision2.R;
-
-
 import java.util.ArrayList;
-
 import java.util.List;
-
-
 import xdroid.toaster.Toaster;
 
 public class SurveyActivity extends AppCompatActivity {
@@ -38,7 +33,7 @@ public class SurveyActivity extends AppCompatActivity {
     List<String>dssinput;
     DatabaseReference rootref,userRef;
     TextView questionTextView,head;
-    RadioGroup rdo,rdo2;
+    RadioGroup rdo,rdo2,ms;
     RadioButton val,btn1,btn2,in,out,both;
     getJsonFile asyncTask;
     Button nextBtn;
@@ -62,6 +57,7 @@ public class SurveyActivity extends AppCompatActivity {
         out=findViewById(R.id.out);
         both=findViewById(R.id.both);
         rdo2=findViewById(R.id.rdo2);
+        ms=findViewById(R.id.ms);
         hptn=findViewById(R.id.hptn);
         dm=findViewById(R.id.dm);
         hrt=findViewById(R.id.hrt);
@@ -69,30 +65,22 @@ public class SurveyActivity extends AppCompatActivity {
         cncr=findViewById(R.id.cncr);
 
        user=FirebaseAuth.getInstance().getCurrentUser();
-
         String phoneNumber=FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
-
         userRef =FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("collected_samples").push();
         FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("phonenumber").setValue(phoneNumber);
-
 //        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
 //        ref.child("phonenumber").setValue(phoneNumber);
-
         questionTextView=findViewById(R.id.questionTxt);
         asyncTask= new getJsonFile();
         asyncTask.execute();
     }
 
-
     @SuppressLint("StaticFieldLeak")
     public class getJsonFile extends AsyncTask<Void, Void, Void> {
 
-
         @Override
         protected Void doInBackground(Void... params) {
-
             try {
-
                 DatabaseReference questionRef = rootref.child("questions");
                 ValueEventListener eventListener = new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
@@ -100,13 +88,11 @@ public class SurveyActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         int count=1;
                         questionInput = new ArrayList<>();
-
                         for(DataSnapshot ds : dataSnapshot.getChildren()) {
                             String question = ds.getValue().toString();
                             questionInput.add(count +" : "+question);
                             count++;
                         }
-
                         questionTextView.setText(questionInput.get(0));
                         nextBtn.setEnabled(true);
                         editText.setEnabled(true);
@@ -117,8 +103,6 @@ public class SurveyActivity extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {}
                 };
                 questionRef.addListenerForSingleValueEvent(eventListener);
-
-
                 DatabaseReference memberRef = rootref.child("members");
                 ValueEventListener eventListener2 = new ValueEventListener() {
                     @Override
@@ -131,16 +115,12 @@ public class SurveyActivity extends AppCompatActivity {
                             memberinput.add(count + " : " + member);
                             count++;
                         }
-
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
                 };
                 memberRef.addListenerForSingleValueEvent(eventListener2);
-
-
-
                 DatabaseReference envRef = rootref.child("envsts");
                 ValueEventListener eventListener3 = new ValueEventListener() {
                     @Override
@@ -153,15 +133,12 @@ public class SurveyActivity extends AppCompatActivity {
                             envinput.add(count +" : "+qstn);
                             count++;
                         }
-
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
                 };
                 envRef.addListenerForSingleValueEvent(eventListener3);
-
-
                 DatabaseReference dssRef = rootref.child("disease");
                 ValueEventListener eventListener4 = new ValueEventListener() {
                     @Override
@@ -174,14 +151,12 @@ public class SurveyActivity extends AppCompatActivity {
                             dssinput.add(count +" : "+member);
                             count++;
                         }
-
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
                 };
                 dssRef.addListenerForSingleValueEvent(eventListener4);
-
             } catch (NullPointerException e) {
                 Toaster.toast("Could not Communicate with the Server.");
             }
@@ -192,7 +167,6 @@ public class SurveyActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             try {
-
             }
             catch (NullPointerException e){
                 toast("Null pointer exception");
@@ -213,9 +187,13 @@ if(condition.equals("qstn")) {
         count++;
     }
         if(count!=7 && accept.equals("yes"))
-    userRef.child("Answers").child(questionInput.get(count - 1)).setValue(editText.getText().toString().trim());
+    userRef.child(questionInput.get(count - 1)).setValue(editText.getText().toString().trim());
         if (count != 5 && count != 6 && count != 7 && accept.equals("yes"))
         questionTextView.setText(questionInput.get(count));
+        if (questionTextView.getText().equals("4 : Phone Number") || questionTextView.getText().equals("5 : Mobile Number"))
+            editText.setInputType(InputType.TYPE_CLASS_PHONE);
+        else
+            editText.setInputType(InputType.TYPE_CLASS_TEXT);
        if(count!=7 && accept.equals("yes")) {
            count++;
            editText.setText("");
@@ -232,18 +210,19 @@ if(condition.equals("qstn")) {
         editn.requestFocus();
         count++;
     }
-
 }
 
-if(condition.equals("mmbr")){
-
-    if(a==1) {
+if(condition.equals("mmbr")) {
+    if (questionTextView.getText().equals("1 : Name"))
+        editText.setInputType(InputType.TYPE_CLASS_PHONE);
+    else
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+    if (a == 1) {
         editText.setText("pass");
-
-        if (editn.length()==0)
+        if (editn.length() == 0)
             toast("Enter the number of members");
         else {
-        loop = Integer.parseInt(editn.getText().toString().trim());
+            loop = Integer.parseInt(editn.getText().toString().trim());
             a = 0;
             questionTextView.setText(memberinput.get(nwcount));
             editText.setVisibility(View.VISIBLE);
@@ -251,79 +230,121 @@ if(condition.equals("mmbr")){
             editn.setVisibility(View.GONE);
             head.setText("Member : " + i);
         }
-    }
-else {
-
+    } else {
         if (nwcount < 7) {
-
-            userRef.child("Answers").child("Member : " + i).child(memberinput.get(nwcount)).setValue(editText.getText().toString().trim());
-            nwcount++;
-            if(nwcount!=7)
-            questionTextView.setText(memberinput.get(nwcount));
-            editText.setText("");
-            if (nwcount == 7) {
-                i++;
-                nwcount = 0;
+            if (questionTextView.getText().equals("3 : Gender")) {
+                selectedId = rdo.getCheckedRadioButtonId();
+                val = (RadioButton) findViewById(selectedId);
+                data = val.getText().toString();
+                userRef.child("Member : " + i).child(memberinput.get(nwcount)).setValue(data);
+                nwcount++;
                 questionTextView.setText(memberinput.get(nwcount));
-                head.setText("Member : "+i);
+                rdo.setVisibility(View.GONE);
+                both.setVisibility(View.GONE);
+                btn2.setText("Inadequate");
+                btn1.setText("Adequate");
+                rdo.clearCheck();
+                editText.setVisibility(View.VISIBLE);
+                editText.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInputFromWindow(editText.getWindowToken(), 0, 0);
             }
-            if (i == loop + 1) {
-                head.setText("Environmental Sanitation");
-                editText.setVisibility(View.GONE);
-                rdo.setVisibility(View.VISIBLE);
-                questionTextView.setText(envinput.get(0));
-                editText.setText("dummy");  //to override null value check
-                condition="envsts";
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-
-                i=0;
+            else if (questionTextView.getText().equals("5 : Marital Status")) {
+                selectedId = ms.getCheckedRadioButtonId();
+                val = (RadioButton) findViewById(selectedId);
+                data = val.getText().toString();
+                userRef.child("Member : " + i).child(memberinput.get(nwcount)).setValue(data);
+                nwcount++;
+                ms.clearCheck();
+                questionTextView.setText(memberinput.get(nwcount));
+                ms.setVisibility(View.GONE);
+                editText.setVisibility(View.VISIBLE);
+                editText.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInputFromWindow(editText.getWindowToken(), 0, 0);
+            } else {
+                userRef.child("Member : " + i).child(memberinput.get(nwcount)).setValue(editText.getText().toString().trim());
+                nwcount++;
+                if (nwcount != 7) {
+                    questionTextView.setText(memberinput.get(nwcount));
+                    editText.setText("");
+                }
+                if (questionTextView.getText().equals("3 : Gender")) {
+                    rdo.setVisibility(View.VISIBLE);
+                    both.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.GONE);
+                    btn1.setText("Male");
+                    btn2.setText("Female");
+                    both.setText("Other");
+                    editText.setText("Dummy");
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInputFromWindow(editText.getWindowToken(), 0, 0);
+                }
+                if (questionTextView.getText().equals("5 : Marital Status")){
+                   ms.setVisibility(View.VISIBLE);
+                    editText.setText("Dummy");
+                    editText.setVisibility(View.GONE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInputFromWindow(editText.getWindowToken(), 0, 0);
+                }
+                if (nwcount == 7) {
+                    i++;
+                    nwcount = 0;
+                    questionTextView.setText(memberinput.get(nwcount));
+                    head.setText("Member : " + i);
+                    editText.setText("");
+                }
+                if (i == loop + 1) {
+                    head.setText("Environmental Sanitation");
+                    editText.setVisibility(View.GONE);
+                    rdo.setVisibility(View.VISIBLE);
+                    questionTextView.setText(envinput.get(0));
+                    editText.setText("dummy");  //to override null value check
+                    condition = "envsts";
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    i = 0;
+                }
             }
-        }
         }
     }
-
+}
 
    else if(condition.equals("envsts")){
-
 switch (qst) {
     case 0:{
         selectedId = rdo.getCheckedRadioButtonId();
         val = (RadioButton) findViewById(selectedId);
         data = val.getText().toString();
-        userRef.child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        userRef.child("envstst").child(envinput.get(qst)).setValue(data);
         qst++;
         questionTextView.setText(envinput.get(qst));
-        btn1.setChecked(false);
-        btn2.setChecked(false);
+        rdo.clearCheck();
         break;
     }
     case 1:{
         selectedId = rdo.getCheckedRadioButtonId();
         val = (RadioButton) findViewById(selectedId);
         data = val.getText().toString();
-        userRef.child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        userRef.child("envstst").child(envinput.get(qst)).setValue(data);
         qst++;
         questionTextView.setText(envinput.get(qst));
         btn1.setText("Smokeless");
         btn2.setText("Smokey");
         both.setVisibility(View.VISIBLE);
-        btn1.setChecked(false);
-        btn2.setChecked(false);
+        rdo.clearCheck();
         break;
     }
     case 2:{
         selectedId = rdo.getCheckedRadioButtonId();
         val = (RadioButton) findViewById(selectedId);
         data = val.getText().toString();
-        userRef.child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        userRef.child("envstst").child(envinput.get(qst)).setValue(data);
         qst++;
         questionTextView.setText(envinput.get(qst));
         rdo.setVisibility(View.GONE);
         rdo2.setVisibility(View.VISIBLE);
-        btn1.setChecked(false);
-        btn2.setChecked(false);
-        both.setChecked(false);
+        rdo.clearCheck();
         both.setVisibility(View.GONE);
         break;
     }
@@ -331,7 +352,7 @@ switch (qst) {
         selectedId = rdo2.getCheckedRadioButtonId();
         val = (RadioButton) findViewById(selectedId);
         data = val.getText().toString();
-        userRef.child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        userRef.child("envstst").child(envinput.get(qst)).setValue(data);
         qst++;
         questionTextView.setText(envinput.get(qst));
         rdo2.setVisibility(View.GONE);
@@ -359,15 +380,14 @@ switch (qst) {
         if(data.equals("Present"))
             toast("Select whether Inside or Outside");
         else {
-            userRef.child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+            userRef.child("envstst").child(envinput.get(qst)).setValue(data);
             qst++;
             questionTextView.setText(envinput.get(qst));
             btn1.setText("Proper");
             btn2.setText("Improper");
             in.setVisibility(View.GONE);
             out.setVisibility(View.GONE);
-            btn1.setChecked(false);
-            btn2.setChecked(false);
+            rdo.clearCheck();
         }
         break;
     }
@@ -375,7 +395,7 @@ switch (qst) {
         selectedId = rdo.getCheckedRadioButtonId();
         val = (RadioButton) findViewById(selectedId);
         data = val.getText().toString();
-        userRef.child("Answers").child("envstst").child(envinput.get(qst)).setValue(data);
+        userRef.child("envstst").child(envinput.get(qst)).setValue(data);
         btn2.setVisibility(View.GONE);
         btn1.setVisibility(View.GONE);
         condition="dss";
@@ -391,10 +411,9 @@ switch (qst) {
     }
     }
     else if(condition.equals("dss")){
-
         switch (qst) {
             case 0: {
-                userRef.child("Answers").child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(editText.getText().toString().trim());
+                userRef.child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(editText.getText().toString().trim());
                 qst++;
                 questionTextView.setText(dssinput.get(qst));
                 editText.setVisibility(View.GONE);
@@ -419,7 +438,7 @@ switch (qst) {
                     get = get+" "+"Kidney";
                 if (cncr.isChecked())
                     get = get+" Cancer";
-                userRef.child("Answers").child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(get);
+                userRef.child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(get);
                 qst++;
                 questionTextView.setText(dssinput.get(qst));
                 hptn.setVisibility(View.GONE);
@@ -435,8 +454,7 @@ switch (qst) {
                 editText.setVisibility(View.GONE);
                 btn2.setVisibility(View.VISIBLE);
                 btn1.setVisibility(View.VISIBLE);
-                btn1.setChecked(false);
-                btn2.setChecked(false);
+                rdo.clearCheck();
                 btn1.setText("Yes");
                 btn2.setText("No");
                 break;
@@ -445,13 +463,10 @@ switch (qst) {
                 selectedId = rdo.getCheckedRadioButtonId();
                 val = (RadioButton) findViewById(selectedId);
                 data = val.getText().toString();
-                userRef.child("Answers").child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(data);
-
-
+                userRef.child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(data);
                 btn1.setText("Allopathie");
                 btn2.setText("Alternative");
-                btn1.setChecked(false);
-                btn2.setChecked(false);
+                rdo.clearCheck();
                 both.setVisibility(View.VISIBLE);
                 both.setChecked(false);
                 qst++;
@@ -462,13 +477,11 @@ switch (qst) {
                 selectedId = rdo.getCheckedRadioButtonId();
                 val = (RadioButton) findViewById(selectedId);
                 data = val.getText().toString();
-                userRef.child("Answers").child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(data);
+                userRef.child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(data);
                 qst++;
                 questionTextView.setText(dssinput.get(qst));
-                btn1.setChecked(false);
-                btn2.setChecked(false);
+                rdo.clearCheck();
                 both.setVisibility(View.GONE);
-                both.setChecked(false);
                 btn1.setText("Regular");
                 btn2.setText("Irregular");
                 break;
@@ -477,9 +490,8 @@ switch (qst) {
                 selectedId = rdo.getCheckedRadioButtonId();
                 val = (RadioButton) findViewById(selectedId);
                 data = val.getText().toString();
-                userRef.child("Answers").child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(data);
-                btn1.setChecked(false);
-                btn2.setChecked(false);
+                userRef.child("Diseases").child("Patient : "+patient).child(dssinput.get(qst)).setValue(data);
+                rdo.clearCheck();
                 qst++;
                 questionTextView.setText("Any more members with diseased condition?");
                 btn1.setText("Yes");
@@ -498,21 +510,19 @@ switch (qst) {
                     else if (data.equals("Yes")){
                     patient++;
                     qst=0;
-                    btn1.setChecked(false);
-                    btn2.setChecked(false);
+                    rdo.clearCheck();
                     questionTextView.setText(dssinput.get(0));
                     editText.setVisibility(View.VISIBLE);
                     editText.setText("");
                     btn2.setVisibility(View.GONE);
                     btn1.setVisibility(View.GONE);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInputFromWindow(editText.getWindowToken(), 0,0);
                     break;
                 }
-
-
             }
         }
     }
-
 }
          else {
         toast("Answer cannot be empty");
